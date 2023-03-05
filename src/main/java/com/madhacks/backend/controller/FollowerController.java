@@ -31,6 +31,7 @@ public class FollowerController {
     @GetMapping("/{username}/followers")
     public ResponseEntity<List<String>> getFollowers(@PathVariable String username){
         return new ResponseEntity<>(followService.getFollowersByUserName(username), HttpStatus.OK);
+        
     }
 
 }

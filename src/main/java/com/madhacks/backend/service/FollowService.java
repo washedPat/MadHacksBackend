@@ -1,6 +1,5 @@
 package com.madhacks.backend.service;
 
-import com.madhacks.backend.model.Follower;
 import com.madhacks.backend.repo.FollowerRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
