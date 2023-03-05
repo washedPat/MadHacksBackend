@@ -1,5 +1,6 @@
 package com.madhacks.backend.controller;
 
+import com.madhacks.backend.common.ErrorResponse;
 import com.madhacks.backend.model.User;
 import com.madhacks.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+
+class UserWithoutPassword {
+    private String email;
+    private int id;
+    public UserWithoutPassword(User user){
+        this.email = user.getUsername();
+        this.id = user.getId();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+}
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -22,16 +40,25 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> get(@PathVariable Integer id) {
+    public ResponseEntity<UserWithoutPassword> get(@PathVariable Integer id) {
         try {
             User user = userService.getUser(id);
-            return new ResponseEntity<User>(user, HttpStatus.OK);
+            return new ResponseEntity<UserWithoutPassword>(new UserWithoutPassword(user), HttpStatus.OK);
         } catch (NoSuchElementException e) {
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<UserWithoutPassword>(HttpStatus.NOT_FOUND);
         }
     }
     @PostMapping("/")
     public void add(@RequestBody User user) {
         userService.saveUser(user);
+    }
+
+    @GetMapping("/user/{username}")
+    public ResponseEntity getUserByUserName(@PathVariable String username){
+        var user = userService.getUserByUserName(username);
+        if(user != null){
+            return new ResponseEntity<UserWithoutPassword>(new UserWithoutPassword(user), HttpStatus.OK);
+        }
+        return new ResponseEntity<ErrorResponse>(new ErrorResponse("user not found"), HttpStatus.NOT_FOUND);
     }
 }

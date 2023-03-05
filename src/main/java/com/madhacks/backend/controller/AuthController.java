@@ -50,7 +50,7 @@ public class AuthController {
         boolean found = authService.validateUser(form.getEmail(), form.getPassword());
         if (!found) {
             userRepo.save(new User(form.getEmail(), form.getPassword()));
-            var user = userRepo.findByUsername(form.getEmail()).get(0);
+            var user = userRepo.findByUsername(form.getEmail());
             ResponseEntity<RegistrationResponse> resp = new ResponseEntity<>(
                     new RegistrationResponse(user.getUsername(), user.getId()), HttpStatus.OK);
             return resp;
@@ -63,7 +63,7 @@ public class AuthController {
     public ResponseEntity login(@RequestBody RegistrationForm form) {
         boolean found = authService.validateUser(form.getEmail(), form.getPassword());
         if (found) {
-            var user = userRepo.findByUsername(form.getEmail()).get(0);
+            var user = userRepo.findByUsername(form.getEmail());
             ResponseEntity<RegistrationResponse> resp = new ResponseEntity<>(
                     new RegistrationResponse(user.getUsername(), user.getId()), HttpStatus.OK);
             return resp;

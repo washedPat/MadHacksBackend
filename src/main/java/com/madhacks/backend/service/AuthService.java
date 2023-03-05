@@ -14,6 +14,7 @@ public class AuthService {
     @Autowired
     private UserRepo userRepo;
     public boolean validateUser(String email, String password){
-        return userRepo.findByUsernameAndPassword(email, password).size() == 1;
+        var user = userRepo.findByUsernameAndPassword(email, password);
+        return user != null;
     }
 }
