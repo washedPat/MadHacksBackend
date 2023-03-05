@@ -10,18 +10,20 @@ public class UserData {
     @Id
     private String userName;
     private String name;
+    private String imageurl;
 
     private int age;
     private int weight;
 
     private double progress;
 
-    public UserData(String userName, String name, int age, int weight){
+    public UserData(String userName, String name, int age, int weight, String imageurl){
         this.userName = userName;
         this.name = name;
         this.age = age;
         this.weight = weight;
         this.progress = 0.0;
+        this.imageurl = imageurl;
     }
     public UserData(){}
 
@@ -55,5 +57,11 @@ public class UserData {
         this.weight = weight;
     }
 
+    public String getImageurl() {
+        return imageurl;
+    }
 
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
+    }
 }

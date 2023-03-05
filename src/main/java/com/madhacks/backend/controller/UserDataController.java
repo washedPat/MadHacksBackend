@@ -7,11 +7,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/*
+userName: "",
+
+ */
 class UserDataForm {
     private String userName;
     private String name;
     private int age;
     private int weight;
+    private String imageurl;
 
     public int getAge() {
         return age;
@@ -28,6 +33,10 @@ class UserDataForm {
     public String getUserName(){
         return userName;
     }
+
+    public String getImageurl() {
+        return imageurl;
+    }
 }
 @RestController
 public class UserDataController {
@@ -36,7 +45,9 @@ public class UserDataController {
 
     @PostMapping("/addUserData")
     public ResponseEntity addUserData(@RequestBody UserDataForm userData){
-        userDataService.addUserData(userData.getName(), userData.getUserName(), userData.getAge(), userData.getWeight());
+        userDataService.addUserData(
+                userData.getName(), userData.getUserName(),
+                userData.getAge(), userData.getWeight(), userData.getImageurl());
         return new ResponseEntity(HttpStatus.OK);
     }
 
